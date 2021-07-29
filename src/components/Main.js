@@ -10,24 +10,35 @@ export default class Main extends Component {
     tarefas: [
       'Estudar',
     ],
+    index: -1,
 
   };
 
   // Envio do form
   handleSubmit = (e) => {
     e.preventDefault();
-    const { tarefas } = this.state;
+    const { tarefas, index } = this.state;
     let { novaTarefa } = this.state;
     novaTarefa = novaTarefa.trim();
 
     if (tarefas.indexOf(novaTarefa) !== -1) return;
 
-    const novastarefas = [...tarefas];
+    const novasTarefas = [...tarefas];
 
-    this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      tarefas: [...novastarefas, novaTarefa],
-    });
+    if (index === -1) {
+      // criando  uma nova tarefa
+      this.setState({
+        tarefas: [...novasTarefas, novaTarefa],
+        novaTarefa: '',
+      });
+    } else {
+      novasTarefas[index] = novaTarefa;
+
+      this.setState({
+        tarefas: [...novasTarefas],
+        index: -1,
+      });
+    }
   }
 
   // Value do input
@@ -39,7 +50,12 @@ export default class Main extends Component {
 
   // Funcao Edit
   handleEdit = (e, index) => {
-    console.log('edit', index);
+    const { tarefas } = this.state;
+
+    this.setState({
+      index,
+      novaTarefa: tarefas[index],
+    });
   }
 
   // Funcao Delete
