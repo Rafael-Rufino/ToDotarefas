@@ -30,11 +30,28 @@ export default class Main extends Component {
     });
   }
 
+  // Value do input
   handleChange = (e) => {
     this.setState({
       novaTarefa: e.target.value,
     });
   };
+
+  // Funcao Edit
+  handleEdit = (e, index) => {
+    console.log('edit', index);
+  }
+
+  // Funcao Delete
+  handleDelete = (e, index) => {
+    const { tarefas } = this.state;
+    const novasTarefas = [...tarefas];
+    novasTarefas.splice(index, 1); // remover 1 elemento do indece
+
+    this.setState({
+      tarefas: [...novasTarefas],
+    });
+  }
 
   render() {
     const { novaTarefa, tarefas } = this.state;
@@ -56,16 +73,28 @@ export default class Main extends Component {
         </form>
 
         <ul className="tarefas">
-          {tarefas.map((tarefa) => (
+          {tarefas.map((tarefa, index) => (
             <li key={tarefa}>
               {tarefa}
               <div>
-                <button className="btn_edit">
-                  <FaEdit className="edit" />
+                {/* Funcao edit */}
+                <button
+                  className="btn_edit"
+                  onClick={(e) => this.handleEdit(e, index)}
+                >
+                  <FaEdit
+                    className="edit"
+                  />
                   Editar
                 </button>
-                <button className="btn_delete">
-                  <FaWindowClose className="delete" />
+                {/* Funcao delete */}
+                <button
+                  className="btn_delete"
+                  onClick={(e) => this.handleDelete(e, index)}
+                >
+                  <FaWindowClose
+                    className="delete"
+                  />
                   Delete
                 </button>
 
