@@ -1,0 +1,47 @@
+
+/* tarefas */
+.tarefas{
+  margin-top:30px;
+}
+.tarefas li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 3px 10px 3px;
+  font-weight: bold;
+  transition: all 600ms;
+}
+.tarefas li:hover{
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+  border-radius: 5px;
+
+}
+
+
+.tarefas li .edit{
+  margin-right: 5px;
+}
+.tarefas li .delete{
+  margin-right: 5px;
+}
+
+.tarefas .btn_edit{
+  padding:5px;
+  color: white;
+  background:#025da8;
+  border:0;
+  cursor: pointer;
+}
+.tarefas .btn_delete{
+  margin-left: 10px;
+  padding:5px;
+  color: white;
+  background:#ce0422;
+  border:0;
+  cursor: pointer;
+}
+.tarefas .btn_edit:hover,
+.tarefas .btn_delete:hover{
+  filter: brightness(0.7);
+}
+

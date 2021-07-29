@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import Tarefas from './Tarefas/index';
+import Form from './Form/index';
 // Form -> add -> edit -> Delete
-import { FaPlusSquare, FaEdit, FaWindowClose } from 'react-icons/fa';
 
 import '../style/Main.css';
 
@@ -13,6 +14,21 @@ export default class Main extends Component {
     index: -1,
 
   };
+
+  // Salvar no localStorage
+  componentDidMount() {
+    const tarefas = JSON.parse(localStorage.getItem('tarefas'));
+
+    if (!tarefas) return;
+    this.setState({ tarefas });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { tarefas } = this.state;
+
+    if (tarefas === prevState.tarefas) return;
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  }
 
   // Envio do form
   handleSubmit = (e) => {
@@ -75,50 +91,18 @@ export default class Main extends Component {
     return (
       <div className="main">
         <h1>Lista de tarefas</h1>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          novaTarefa={novaTarefa}
+        />
 
-        <form onSubmit={this.handleSubmit} action="#" className="form">
-          <input
-            onChange={this.handleChange}
-            type="text"
-            value={novaTarefa}
-          />
-          <button type="submit" className="btn_add">
-            <FaPlusSquare className="add" />
-            Adicionar
-          </button>
-        </form>
+        <Tarefas
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+          tarefas={tarefas}
 
-        <ul className="tarefas">
-          {tarefas.map((tarefa, index) => (
-            <li key={tarefa}>
-              {tarefa}
-              <div>
-                {/* Funcao edit */}
-                <button
-                  className="btn_edit"
-                  onClick={(e) => this.handleEdit(e, index)}
-                >
-                  <FaEdit
-                    className="edit"
-                  />
-                  Editar
-                </button>
-                {/* Funcao delete */}
-                <button
-                  className="btn_delete"
-                  onClick={(e) => this.handleDelete(e, index)}
-                >
-                  <FaWindowClose
-                    className="delete"
-                  />
-                  Delete
-                </button>
-
-              </div>
-            </li>
-          ))}
-
-        </ul>
+        />
       </div>
     );
   }
